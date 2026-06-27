@@ -8,6 +8,9 @@ __pycache__/
 .venv/
 venv/
 
+# sqlite (런타임 생성)
+*.db
+
 # node
 node_modules/
 
