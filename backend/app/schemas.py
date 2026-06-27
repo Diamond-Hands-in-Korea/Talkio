@@ -98,3 +98,10 @@ class Nudge(BaseModel):
 
 class NudgeList(BaseModel):
     nudges: list[Nudge]
+
+
+# --- transcribe: POST /api/transcribe (음성 → 텍스트) ---
+
+
+class TranscribeResponse(BaseModel):
+    text: str
