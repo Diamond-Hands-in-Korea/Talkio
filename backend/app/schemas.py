@@ -32,6 +32,26 @@ class PublicProfile(BaseModel):
     contact: Optional[str] = None
 
 
+# --- profile: GET /api/me (내 프로필, networking_goal 포함) ---
+
+
+class Profile(BaseModel):
+    user_id: int
+    name: str
+    background: Optional[str] = None
+    demographic: Optional[str] = None
+    contact: Optional[str] = None
+    networking_goal: Optional[str] = None
+
+
+# --- profile: GET /api/me/qr (공유 URL + 토큰) ---
+
+
+class QRResponse(BaseModel):
+    share_url: str
+    token: str
+
+
 # --- connections: POST /api/connections ---
 
 
