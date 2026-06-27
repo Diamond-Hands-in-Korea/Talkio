@@ -112,7 +112,20 @@ def generate_nudges(me: dict, connections: list[dict]) -> list[dict]:
         return fallback
 
 
+WHISPER_MODEL = os.getenv("WHISPER_MODEL", "whisper-1")
+
+
 def transcribe_audio(audio_bytes: bytes, filename: str) -> str:
-    """오디오 → 텍스트 (Whisper)."""
-    # TODO: client.audio.transcriptions.create(model="whisper-1", file=...)
-    raise NotImplementedError
+    """오디오 → 텍스트 (Whisper).
+
+    OPENAI_API_KEY 가 없거나 호출이 실패하면 예외를 그대로 올린다.
+    (라우터에서 502 로 변환 — 프론트는 memo 직접 입력 폴백 유지.)
+    """
+    from openai import OpenAI
+
+    client = OpenAI()  # OPENAI_API_KEY 는 .env 에서 로드
+    resp = client.audio.transcriptions.create(
+        model=WHISPER_MODEL,
+        file=(filename or "audio.m4a", audio_bytes),
+    )
+    return resp.text
